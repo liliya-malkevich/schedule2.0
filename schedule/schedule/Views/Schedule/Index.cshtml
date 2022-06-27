@@ -1,0 +1,80 @@
+﻿@model IEnumerable<schedule.Models.Schedule>
+@{  
+    ViewData["Title"] = "Index";  
+}  
+<h2>Index</h2> 
+<table class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.WeekdayName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.numTimeLesson)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.SubjectName)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.FormatName)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.LessonTimeStart)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.LessonTimeEnd)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.numGroup)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.TeacherName)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.LectureHallNum)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.NoteName)
+            </th>
+       
+            </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WeekdayName)
+                </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.numTimeLesson)
+                </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.SubjectName)
+                </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.FormatName)
+                </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.LessonTimeStart)
+                </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.LessonTimeEnd)
+                </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.numGroup)
+                </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.TeacherName)
+                </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.LectureHallNum)
+                </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.NoteName)
+                </td>
+                
+            </tr>
+        }
+    </tbody>
+</table>
