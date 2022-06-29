@@ -16,6 +16,7 @@
         public int numTimeLesson { get; set; }
         public string SubjectName { get; set; }
         public string FormatName { get; set; }
+        public Group gr = new Group();
         public TimeSpan LessonTimeStart { get; set; }
         public TimeSpan LessonTimeEnd { get; set; }
         public string numGroup { get; set; }

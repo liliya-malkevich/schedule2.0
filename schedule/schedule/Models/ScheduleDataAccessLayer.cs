@@ -28,6 +28,7 @@ namespace schedule.Models
                     schedule.LessonTimeStart = sdr.GetTimeSpan(4);
                     schedule.LessonTimeEnd = sdr.GetTimeSpan(5);
                     schedule.numGroup = sdr.GetString(6);
+                    //schedule.gr.numGroup = sdr.GetString(6);
                     schedule.TeacherName = sdr.GetString(7);
                     schedule.LectureHallNum = sdr["LectureHallNum"].ToString();
                     schedule.NoteName = sdr["NoteName"].ToString();

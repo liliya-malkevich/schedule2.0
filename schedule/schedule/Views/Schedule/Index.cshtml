@@ -1,46 +1,81 @@
-﻿@model IEnumerable<schedule.Models.Schedule>
+﻿@using schedule;
+@model dynamic
 @{  
     ViewData["Title"] = "Index";  
 }  
 <h2>Index</h2> 
+<select>
+    <form>
+    <option disabled>Course</option>
+    @foreach (Course item in Model.Course)
+   {
+       
+                <option>
+                    @Html.DisplayFor(modelItem => item.numCourse)
+                </option>
+                 
+                
+                 
+   }
+   </form> 
+</select>
+
+<select>
+    <form>
+    <option disabled>Group</option>
+    @foreach (Group item in Model.Group)
+   {
+       
+                <option>
+                 @Html.DisplayFor(modelItem => item.IdCourse)k +  @Html.DisplayFor(modelItem => item.numGroup)g
+                </option>
+                 
+                
+                 
+   }
+   </form> 
+</select>
+
+
 <table class="table table-bordered table-responsive">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.WeekdayName)
+               @* @Html.DisplayNameFor(model => model.WeekdayName)*@
+               День недели
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.numTimeLesson)
+              №
             </th>
              <th>
-                @Html.DisplayNameFor(model => model.SubjectName)
+                Дисциплина
             </th>
              <th>
-                @Html.DisplayNameFor(model => model.FormatName)
+               Формат
             </th>
              <th>
-                @Html.DisplayNameFor(model => model.LessonTimeStart)
+                Начало
             </th>
              <th>
-                @Html.DisplayNameFor(model => model.LessonTimeEnd)
+                Конец
             </th>
              <th>
-                @Html.DisplayNameFor(model => model.numGroup)
+                Группа
             </th>
              <th>
-                @Html.DisplayNameFor(model => model.TeacherName)
+              Препод
             </th>
              <th>
-                @Html.DisplayNameFor(model => model.LectureHallNum)
+                Ауд
             </th>
              <th>
-                @Html.DisplayNameFor(model => model.NoteName)
+                Заметки
             </th>
        
             </tr>
     </thead>
     <tbody>
-        @foreach(var item in Model)
+        @foreach(Schedule item in Model.Schedule)
         {
             <tr>
                 <td>
