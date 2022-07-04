@@ -1,24 +1,37 @@
 ﻿@using schedule;
 @model dynamic
+ <script src="~/Scripts/jquery-2.1.1.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 @{  
     ViewData["Title"] = "Index";  
 }  
 <h2>Index</h2> 
-<select>
-    <form>
+
+<div id="dynamicContentContainer"></div>
+
+
+@*@await Html.PartialAsync("GetGroupByCourseId")*@
+
+ <form asp-controller="Schedule" asp-action="Index" method="post">
+<select data-val="true" id="IdCourse" name="IdCourse">
     <option disabled>Course</option>
     @foreach (Course item in Model.Course)
    {
-       
-                <option>
+      
+                <option value="@item.IdCourse">
+                 
                     @Html.DisplayFor(modelItem => item.numCourse)
+                   
                 </option>
                  
-                
+      
                  
    }
-   </form> 
+       
 </select>
+     <input type="submit"/>
+ </form>  
+
 
 <select>
     <form>

@@ -73,7 +73,7 @@ namespace schedule.Models
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                SqlCommand cmd = new SqlCommand("sch.GroupCourseList", con);
+                SqlCommand cmd = new SqlCommand("sch.GroupCourseRead", con);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@IdCourse", courseid);
                 con.Open();
@@ -85,7 +85,7 @@ namespace schedule.Models
                     Group sch = new Group();
                     sch.IdGroup = sdr.GetInt32(0);
                     sch.numGroup = sdr.GetString(1);
-            
+                    sch.IdCourse = sdr.GetInt32(2);
 
                     lstGroup.Add(sch);
 
@@ -93,7 +93,7 @@ namespace schedule.Models
                 con.Close();
             }
             return lstGroup;
-           
+
 
         }
 
