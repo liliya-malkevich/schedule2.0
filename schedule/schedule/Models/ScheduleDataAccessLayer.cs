@@ -39,6 +39,41 @@ namespace schedule.Models
             }
             return lstschedule;
         }
-    
+
+        public IEnumerable<Schedule> ScheduleGroupRead(int IdGroup)
+        {
+            List<Schedule> lstschedule = new List<Schedule>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("sch.ScheduleGroupRead", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@IdGroup", IdGroup);
+                con.Open();
+                SqlDataReader sdr = cmd.ExecuteReader();
+
+                while (sdr.Read())
+                {
+                    Schedule schedule = new Schedule();
+
+                    schedule.WeekdayName = sdr["WeekdayName"].ToString();
+                    schedule.numTimeLesson = Convert.ToInt32(sdr["numTimeLesson"]);
+                    schedule.SubjectName = sdr["SubjectName"].ToString();
+                    schedule.FormatName = sdr["FormatName"].ToString();
+                    schedule.LessonTimeStart = sdr.GetTimeSpan(4);
+                    schedule.LessonTimeEnd = sdr.GetTimeSpan(5);
+                    schedule.numGroup = sdr.GetString(6);
+                    //schedule.gr.numGroup = sdr.GetString(6);
+                    schedule.TeacherName = sdr.GetString(7);
+                    schedule.LectureHallNum = sdr["LectureHallNum"].ToString();
+                    schedule.NoteName = sdr["NoteName"].ToString();
+                    lstschedule.Add(schedule);
+
+                }
+                con.Close();
+            }
+            return lstschedule;
+        }
+
     }
 }

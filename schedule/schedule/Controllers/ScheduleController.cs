@@ -16,19 +16,35 @@ namespace schedule.Controllers
         //    grp = objgroup.GroupList().ToList();
         //    return View(grp);
         //}
-        public IActionResult Index(int IdCourse)
+        public IActionResult Index(int IdCourse, int IdGroup)
         {
             dynamic mymodel = new ExpandoObject();
-            mymodel.Schedule = objschedule.ScheduleList().ToList();
+            
             
             mymodel.Course = objcourse.CourseList().ToList();
-            if(IdCourse == 0)
+            if(IdCourse == 0 && IdGroup==0)
             {
                 mymodel.Group = objgroup.GroupList().ToList();
+                mymodel.Schedule = objschedule.ScheduleList().ToList();
                 return View(mymodel);
             }
 
-            mymodel.Group = objgroup.GroupCourseList(IdCourse).ToList();
+            if (IdGroup == 0 && IdCourse != 0)
+            {
+                //mymodel.Group = objgroup.GroupList().ToList();
+                mymodel.Group = objgroup.GroupCourseList(IdCourse).ToList();
+                mymodel.Schedule = objschedule.ScheduleList().ToList();
+                return View(mymodel);
+            }
+
+            if(IdGroup != 0)
+            {
+                mymodel.Group = objgroup.GroupList().ToList();
+                mymodel.Schedule = objschedule.ScheduleGroupRead(IdGroup).ToList();
+            }
+
+            
+           
             return View(mymodel);
             
             return View(/*grp*/);

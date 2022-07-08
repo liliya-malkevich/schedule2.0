@@ -33,21 +33,25 @@
  </form>  
 
 
-<select>
-    <form>
-    <option disabled>Group</option>
+
+    <form asp-controller="Schedule" asp-action="Index" method="post">
+<select data-val="true" id="IdGroup" name="IdGroup">
+    <option disabled>Course</option>
     @foreach (Group item in Model.Group)
    {
        
-                <option>
+                <option value="@item.IdGroup">
                  @Html.DisplayFor(modelItem => item.IdCourse)k +  @Html.DisplayFor(modelItem => item.numGroup)g
                 </option>
                  
                 
                  
    }
+
+   </select>
+     <input type="submit"/>
    </form> 
-</select>
+
 
 
 <table class="table table-bordered table-responsive">
