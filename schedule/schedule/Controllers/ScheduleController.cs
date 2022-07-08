@@ -56,7 +56,12 @@ namespace schedule.Controllers
         //    grp = objgroup.GroupCourseList(IdCourse).ToList();
         //      return PartialView(grp);
         //}
-
+        [HttpPost]
+        public IActionResult DeleteSchedule(int IdSchedule)
+        {
+            objschedule.Delete_Schedule(IdSchedule);
+            return RedirectToAction("Index");
+        }
 
 
 

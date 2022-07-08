@@ -3,9 +3,9 @@
  <script src="~/Scripts/jquery-2.1.1.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 @{  
-    ViewData["Title"] = "Index";  
+    ViewData["Title"] = "Schedule";  
 }  
-<h2>Index</h2> 
+<h2>Schedule</h2> 
 
 <div id="dynamicContentContainer"></div>
 
@@ -125,7 +125,14 @@
                  <td>
                     @Html.DisplayFor(modelItem => item.NoteName)
                 </td>
-                
+                <td>  
+               @* <a asp-action="Edit_customer" asp-route-id="@item">Edit</a> | *@ 
+                <form id="form-@item.IdSchedule"  asp-controller="Schedule" asp-action="DeleteSchedule" method="post">
+                                    <input type="hidden" name="IdSchedule" value="@item.IdSchedule">
+                                    <a href="#" onclick="document.getElementById('form-@item.IdSchedule').submit();">удалить</a>
+                                </form>
+             
+            </td>  
             </tr>
         }
     </tbody>

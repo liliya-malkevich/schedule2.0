@@ -11,7 +11,7 @@
         //public int IdSubject { get; set; }
         //public int IdNote { get; set; }
         //public int IdFormat { get; set; }
-
+        public int IdSchedule { get; set; }
         public string WeekdayName { get; set; }
         public int numTimeLesson { get; set; }
         public string SubjectName { get; set; }
