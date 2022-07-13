@@ -1,13 +1,12 @@
-﻿using System;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
+
 namespace schedule.Models
 {
-    public class SubjectDataAccessLayer
+    public class TimeLessonsDataAccessLayer
     {
-        //string connectionString = "Data Source=(local)\\SQLEXPRESS; Database = SCHEDULE;Persist Security Info=false;User ID='sa';Password='sa';MultipleActiveResultSets=True;Trusted_Connection=False;";
         SqlConnection con;
 
-        public SubjectDataAccessLayer()
+        public TimeLessonsDataAccessLayer()
         {
             var confoguration = GetConfiguration();
             con = new SqlConnection(confoguration.GetSection("Data").GetSection("ConnectionString").Value);
@@ -18,13 +17,13 @@ namespace schedule.Models
             var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
             return builder.Build();
         }
-        public IEnumerable<Subject> SubjectList()
+        public IEnumerable<TimeLessons> TimeLessonsList()
         {
-            List<Subject> lstSubject = new List<Subject>();
+            List<TimeLessons> lstTimeLessons = new List<TimeLessons>();
 
             using (con)
             {
-                SqlCommand cmd = new SqlCommand("sch.SubjectList", con);
+                SqlCommand cmd = new SqlCommand("sch.TimeLessonsList", con);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
                 con.Open();
@@ -32,17 +31,19 @@ namespace schedule.Models
 
                 while (sdr.Read())
                 {
-                    Subject subject = new Subject();
-                    subject.IdSubject = Convert.ToInt32(sdr["IdSubject"]);
-                    subject.SubjectName = sdr["SubjectName"].ToString();
+                    TimeLessons TimeLesson = new TimeLessons();
+                    TimeLesson.IdTimeLesson = Convert.ToInt32(sdr["IdTimeLesson"]);
+                    TimeLesson.numTimeLesson = Convert.ToInt32(sdr["numTimeLesson"]);
+                    TimeLesson.LessonTimeStart = sdr.GetTimeSpan(2);
+                    TimeLesson.LessonTimeEnd = sdr.GetTimeSpan(3);
 
-                    lstSubject.Add(subject);
+
+                    lstTimeLessons.Add(TimeLesson);
 
                 }
                 con.Close();
             }
-            return lstSubject;
+            return lstTimeLessons;
         }
-
     }
 }

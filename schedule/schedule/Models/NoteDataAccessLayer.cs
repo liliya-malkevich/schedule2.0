@@ -1,13 +1,12 @@
-﻿using System;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
+
 namespace schedule.Models
 {
-    public class SubjectDataAccessLayer
+    public class NoteDataAccessLayer
     {
-        //string connectionString = "Data Source=(local)\\SQLEXPRESS; Database = SCHEDULE;Persist Security Info=false;User ID='sa';Password='sa';MultipleActiveResultSets=True;Trusted_Connection=False;";
         SqlConnection con;
 
-        public SubjectDataAccessLayer()
+        public NoteDataAccessLayer()
         {
             var confoguration = GetConfiguration();
             con = new SqlConnection(confoguration.GetSection("Data").GetSection("ConnectionString").Value);
@@ -18,13 +17,13 @@ namespace schedule.Models
             var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
             return builder.Build();
         }
-        public IEnumerable<Subject> SubjectList()
+        public IEnumerable<Note> NoteList()
         {
-            List<Subject> lstSubject = new List<Subject>();
+            List<Note> lstNote = new List<Note>();
 
             using (con)
             {
-                SqlCommand cmd = new SqlCommand("sch.SubjectList", con);
+                SqlCommand cmd = new SqlCommand("sch.NoteList", con);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
                 con.Open();
@@ -32,17 +31,17 @@ namespace schedule.Models
 
                 while (sdr.Read())
                 {
-                    Subject subject = new Subject();
-                    subject.IdSubject = Convert.ToInt32(sdr["IdSubject"]);
-                    subject.SubjectName = sdr["SubjectName"].ToString();
+                    Note note = new Note();
+                    note.IdNote = Convert.ToInt32(sdr["IdNote"]);
+                    note.NoteName = sdr["NoteName"].ToString();
+                    note.NoteText = sdr["NoteText"].ToString();
 
-                    lstSubject.Add(subject);
+                    lstNote.Add(note);
 
                 }
                 con.Close();
             }
-            return lstSubject;
+            return lstNote;
         }
-
     }
 }

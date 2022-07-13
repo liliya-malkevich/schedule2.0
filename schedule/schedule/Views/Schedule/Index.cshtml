@@ -13,8 +13,8 @@
 @*@await Html.PartialAsync("GetGroupByCourseId")*@
 
  <form asp-controller="Schedule" asp-action="Index" method="post">
-<select data-val="true" id="IdCourse" name="IdCourse">
-    <option disabled>Course</option>
+<select data-val="true" id="IdCourse" name="IdCourse"  onchange="this.form.submit();">
+    <option selected>Course</option>
     @foreach (Course item in Model.Course)
    {
       
@@ -29,14 +29,14 @@
    }
        
 </select>
-     <input type="submit"/>
+    @* <input type="submit"/>*@
  </form>  
 
 
 
     <form asp-controller="Schedule" asp-action="Index" method="post">
-<select data-val="true" id="IdGroup" name="IdGroup">
-    <option disabled>Course</option>
+<select data-val="true" id="IdGroup" name="IdGroup" onchange="this.form.submit();">
+    <option selected>Group</option>
     @foreach (Group item in Model.Group)
    {
        
@@ -49,7 +49,7 @@
    }
 
    </select>
-     <input type="submit"/>
+    @* <input type="submit"/>*@
    </form> 
 
 

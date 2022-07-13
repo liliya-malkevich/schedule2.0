@@ -1,13 +1,12 @@
-﻿using System;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
+
 namespace schedule.Models
 {
-    public class SubjectDataAccessLayer
+    public class TeacherDataAccessLayer
     {
-        //string connectionString = "Data Source=(local)\\SQLEXPRESS; Database = SCHEDULE;Persist Security Info=false;User ID='sa';Password='sa';MultipleActiveResultSets=True;Trusted_Connection=False;";
         SqlConnection con;
 
-        public SubjectDataAccessLayer()
+        public TeacherDataAccessLayer()
         {
             var confoguration = GetConfiguration();
             con = new SqlConnection(confoguration.GetSection("Data").GetSection("ConnectionString").Value);
@@ -18,13 +17,13 @@ namespace schedule.Models
             var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
             return builder.Build();
         }
-        public IEnumerable<Subject> SubjectList()
+        public IEnumerable<Teacher> TeacherList()
         {
-            List<Subject> lstSubject = new List<Subject>();
+            List<Teacher> lstTeacher = new List<Teacher>();
 
             using (con)
             {
-                SqlCommand cmd = new SqlCommand("sch.SubjectList", con);
+                SqlCommand cmd = new SqlCommand("sch.TeacherList", con);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
                 con.Open();
@@ -32,17 +31,17 @@ namespace schedule.Models
 
                 while (sdr.Read())
                 {
-                    Subject subject = new Subject();
-                    subject.IdSubject = Convert.ToInt32(sdr["IdSubject"]);
-                    subject.SubjectName = sdr["SubjectName"].ToString();
+                    Teacher teacher = new Teacher();
+                    teacher.IdTeacher = Convert.ToInt32(sdr["IdTeacher"]);
+                    teacher.TeacherName = sdr["TeacherName"].ToString();
 
-                    lstSubject.Add(subject);
+
+                    lstTeacher.Add(teacher);
 
                 }
                 con.Close();
             }
-            return lstSubject;
+            return lstTeacher;
         }
-
     }
 }

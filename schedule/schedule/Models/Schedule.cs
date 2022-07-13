@@ -3,14 +3,14 @@
     public class Schedule
     {
         //public int IdSchedule { get; set; }
-        //public int IdLectureHall { get; set; }
-        //public int IdTeacher { get; set; }
-        //public int IdGroup { get; set; }
-        //public int IdWeekday { get; set; }
-        //public int IdTimeLesson { get; set; }
-        //public int IdSubject { get; set; }
-        //public int IdNote { get; set; }
-        //public int IdFormat { get; set; }
+        public int IdLectureHall { get; set; }
+        public int IdTeacher { get; set; }
+        public int IdGroup { get; set; }
+        public int IdWeekday { get; set; }
+        public int IdTimeLesson { get; set; }
+        public int IdSubject { get; set; }
+        public int IdNote { get; set; }
+        public int IdFormat { get; set; }
         public int IdSchedule { get; set; }
         public string WeekdayName { get; set; }
         public int numTimeLesson { get; set; }

@@ -1,13 +1,13 @@
-﻿using System;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
+
 namespace schedule.Models
 {
-    public class SubjectDataAccessLayer
+
+    public class FormatDataAccessLayer
     {
-        //string connectionString = "Data Source=(local)\\SQLEXPRESS; Database = SCHEDULE;Persist Security Info=false;User ID='sa';Password='sa';MultipleActiveResultSets=True;Trusted_Connection=False;";
         SqlConnection con;
 
-        public SubjectDataAccessLayer()
+        public FormatDataAccessLayer()
         {
             var confoguration = GetConfiguration();
             con = new SqlConnection(confoguration.GetSection("Data").GetSection("ConnectionString").Value);
@@ -18,13 +18,13 @@ namespace schedule.Models
             var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
             return builder.Build();
         }
-        public IEnumerable<Subject> SubjectList()
+        public IEnumerable<Format> FormatList()
         {
-            List<Subject> lstSubject = new List<Subject>();
+            List<Format> lstFormat = new List<Format>();
 
             using (con)
             {
-                SqlCommand cmd = new SqlCommand("sch.SubjectList", con);
+                SqlCommand cmd = new SqlCommand("sch.FormatList", con);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
                 con.Open();
@@ -32,17 +32,17 @@ namespace schedule.Models
 
                 while (sdr.Read())
                 {
-                    Subject subject = new Subject();
-                    subject.IdSubject = Convert.ToInt32(sdr["IdSubject"]);
-                    subject.SubjectName = sdr["SubjectName"].ToString();
+                    Format format = new Format();
+                    format.IdFormat = Convert.ToInt32(sdr["IdFormat"]);
+                    format.FormatName = sdr["FormatName"].ToString();
 
-                    lstSubject.Add(subject);
+                    lstFormat.Add(format);
 
                 }
                 con.Close();
             }
-            return lstSubject;
+            return lstFormat;
         }
-
     }
+
 }

@@ -1,15 +1,31 @@
 ﻿using System.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 namespace schedule.Models
 {
     public class ScheduleDataAccessLayer
     {
-        string connectionString = "Data Source=(local)\\SQLEXPRESS; Database = SCHEDULE;Persist Security Info=false;User ID='sa';Password='sa';MultipleActiveResultSets=True;Trusted_Connection=False;";
-    
+        // string connectionString = "Data Source=(local)\\SQLEXPRESS; Database = SCHEDULE;Persist Security Info=false;User ID='sa';Password='sa';MultipleActiveResultSets=True;Trusted_Connection=False;";
+        // string connectionString = _configuration.GetConnectionString("myDb1");
+
+        SqlConnection con;
+
+        public ScheduleDataAccessLayer()
+        {
+            var confoguration = GetConfiguration();
+            con = new SqlConnection(confoguration.GetSection("Data").GetSection("ConnectionString").Value);
+        }
+
+        public IConfigurationRoot GetConfiguration()
+        {
+            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            return builder.Build();
+        }
+
         public IEnumerable<Schedule> ScheduleList()
         {
             List<Schedule> lstschedule = new List<Schedule>();
 
-            using(SqlConnection con = new SqlConnection(connectionString))
+            using(con)
             {
                 SqlCommand cmd = new SqlCommand("sch.ScheduleList", con);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -44,7 +60,7 @@ namespace schedule.Models
         {
             List<Schedule> lstschedule = new List<Schedule>();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (con)
             {
                 SqlCommand cmd = new SqlCommand("sch.ScheduleGroupRead", con);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -77,11 +93,11 @@ namespace schedule.Models
         }
 
       
- public void Delete_Schedule(int IdSchedule)
+        public void Delete_Schedule(int IdSchedule)
         {
             List<Schedule> lstschedule = new List<Schedule>();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (con)
             {
                 SqlCommand cmd = new SqlCommand("sch.ScheduleDelete", con);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -91,6 +107,29 @@ namespace schedule.Models
                 con.Close();
             }
         
+        }
+
+        public void UpdateSchedule(Schedule schedule)
+        {
+            using(con)
+            {
+                SqlCommand cmd = new SqlCommand("ScheduleUpdate", con);
+                cmd.CommandType=System.Data.CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@IdSchedule", schedule.IdSchedule);
+                cmd.Parameters.AddWithValue("@IdLectureHall", schedule.IdLectureHall);
+                cmd.Parameters.AddWithValue("@IdTeacher", schedule.IdTeacher);
+                cmd.Parameters.AddWithValue("@IdGroup", schedule.IdGroup);
+                cmd.Parameters.AddWithValue("@IdWeekday", schedule.IdWeekday);
+                cmd.Parameters.AddWithValue("@IdTimeLesson", schedule.IdTimeLesson);
+                cmd.Parameters.AddWithValue("@IdSubject", schedule.IdSubject);
+                cmd.Parameters.AddWithValue("@IdNote", schedule.IdNote);
+                cmd.Parameters.AddWithValue("@IdFormat", schedule.IdFormat);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+                    con.Close();
+            }
         }
     }
 }
