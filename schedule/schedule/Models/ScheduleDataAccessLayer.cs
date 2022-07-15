@@ -32,25 +32,8 @@ namespace schedule.Models
 
                 con.Open();
                 SqlDataReader sdr = cmd.ExecuteReader();
-
-                while (sdr.Read())
-                {
-                    Schedule schedule = new Schedule();
-                    schedule.IdSchedule = Convert.ToInt32(sdr["IdSchedule"]);
-                    schedule.WeekdayName = sdr["WeekdayName"].ToString();
-                    schedule.numTimeLesson = Convert.ToInt32(sdr["numTimeLesson"]);
-                    schedule.SubjectName = sdr["SubjectName"].ToString();
-                    schedule.FormatName = sdr["FormatName"].ToString();
-                    schedule.LessonTimeStart = sdr.GetTimeSpan(5);
-                    schedule.LessonTimeEnd = sdr.GetTimeSpan(6);
-                    schedule.numGroup = sdr.GetString(7);
-                    //schedule.gr.numGroup = sdr.GetString(6);
-                    schedule.TeacherName = sdr.GetString(8);
-                    schedule.LectureHallNum = sdr["LectureHallNum"].ToString();
-                    schedule.NoteName = sdr["NoteName"].ToString();
-                    lstschedule.Add(schedule);
-
-                }
+                lstschedule = GetSchedule(sdr);
+               
                 con.Close();
             }
             return lstschedule;
@@ -68,31 +51,31 @@ namespace schedule.Models
                 con.Open();
                 SqlDataReader sdr = cmd.ExecuteReader();
 
-                while (sdr.Read())
-                {
-                    Schedule schedule = new Schedule();
-
-                    schedule.IdSchedule = Convert.ToInt32(sdr["IdSchedule"]);
-                    schedule.WeekdayName = sdr["WeekdayName"].ToString();
-                    schedule.numTimeLesson = Convert.ToInt32(sdr["numTimeLesson"]);
-                    schedule.SubjectName = sdr["SubjectName"].ToString();
-                    schedule.FormatName = sdr["FormatName"].ToString();
-                    schedule.LessonTimeStart = sdr.GetTimeSpan(5);
-                    schedule.LessonTimeEnd = sdr.GetTimeSpan(6);
-                    schedule.numGroup = sdr.GetString(7);
-                    //schedule.gr.numGroup = sdr.GetString(6);
-                    schedule.TeacherName = sdr.GetString(8);
-                    schedule.LectureHallNum = sdr["LectureHallNum"].ToString();
-                    schedule.NoteName = sdr["NoteName"].ToString();
-                    lstschedule.Add(schedule);
-
-                }
+                lstschedule = GetSchedule(sdr);
+               
                 con.Close();
             }
             return lstschedule;
         }
 
-      
+        public IEnumerable<Schedule> ScheduleCourseRead(int IdCourse)
+        {
+            List<Schedule> lstschedule = new List<Schedule>();
+
+            using (con)
+            {
+                SqlCommand cmd = new SqlCommand("sch.ScheduleCourseRead", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@IdCourse", IdCourse);
+                con.Open();
+                SqlDataReader sdr = cmd.ExecuteReader();
+                lstschedule = GetSchedule(sdr);
+                
+                con.Close();
+            }
+            return lstschedule;
+        }
+
         public void Delete_Schedule(int IdSchedule)
         {
             List<Schedule> lstschedule = new List<Schedule>();
@@ -113,7 +96,7 @@ namespace schedule.Models
         {
             using(con)
             {
-                SqlCommand cmd = new SqlCommand("ScheduleUpdate", con);
+                SqlCommand cmd = new SqlCommand("sch.ScheduleUpdate", con);
                 cmd.CommandType=System.Data.CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@IdSchedule", schedule.IdSchedule);
@@ -131,5 +114,69 @@ namespace schedule.Models
                     con.Close();
             }
         }
+
+        public Schedule ScheduleLessonRead(int IdSchedule)
+        {
+            //Schedule lstschedule = new Schedule();
+            Schedule schedule = new Schedule();
+            using (con)
+            {
+                SqlCommand cmd = new SqlCommand("sch.ScheduleLessonRead", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@IdLesson", IdSchedule);
+                con.Open();
+                SqlDataReader sdr = cmd.ExecuteReader();
+         
+                while (sdr.Read())
+                {
+                   
+
+                    schedule.IdSchedule = Convert.ToInt32(sdr["IdSchedule"]);
+                    schedule.WeekdayName = sdr["WeekdayName"].ToString();
+                    schedule.numTimeLesson = Convert.ToInt32(sdr["numTimeLesson"]);
+                    schedule.SubjectName = sdr["SubjectName"].ToString();
+                    schedule.FormatName = sdr["FormatName"].ToString();
+                    schedule.LessonTimeStart = sdr.GetTimeSpan(5);
+                    schedule.LessonTimeEnd = sdr.GetTimeSpan(6);
+                    schedule.numGroup = sdr.GetString(7);
+                    schedule.numCourse = Convert.ToInt32(sdr["numCourse"]);
+                    schedule.TeacherName = sdr.GetString(9);
+                    schedule.LectureHallNum = sdr["LectureHallNum"].ToString();
+                    schedule.NoteName = sdr["NoteName"].ToString();
+                   
+
+                }
+                con.Close();
+            }
+            return schedule;
+        }
+
+        public List<Schedule> GetSchedule(SqlDataReader sdr)
+        {
+            List<Schedule> lstschedule = new List<Schedule>();
+            
+
+            while (sdr.Read())
+            {
+                Schedule schedule = new Schedule();
+
+                schedule.IdSchedule = Convert.ToInt32(sdr["IdSchedule"]);
+                schedule.WeekdayName = sdr["WeekdayName"].ToString();
+                schedule.numTimeLesson = Convert.ToInt32(sdr["numTimeLesson"]);
+                schedule.SubjectName = sdr["SubjectName"].ToString();
+                schedule.FormatName = sdr["FormatName"].ToString();
+                schedule.LessonTimeStart = sdr.GetTimeSpan(5);
+                schedule.LessonTimeEnd = sdr.GetTimeSpan(6);
+                schedule.numGroup = sdr.GetString(7);
+                schedule.numCourse = Convert.ToInt32(sdr["numCourse"]);
+                schedule.TeacherName = sdr.GetString(9);
+                schedule.LectureHallNum = sdr["LectureHallNum"].ToString();
+                schedule.NoteName = sdr["NoteName"].ToString();
+                lstschedule.Add(schedule);
+
+            }
+
+            return lstschedule;
+        } 
     }
 }

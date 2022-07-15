@@ -80,6 +80,9 @@
                 Группа
             </th>
              <th>
+                Курс
+            </th>
+             <th>
               Препод
             </th>
              <th>
@@ -116,6 +119,9 @@
                  <td>
                     @Html.DisplayFor(modelItem => item.numGroup)
                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.numCourse)
+                </td>
                  <td>
                     @Html.DisplayFor(modelItem => item.TeacherName)
                 </td>
@@ -137,3 +143,5 @@
         }
     </tbody>
 </table>
+
+<a  asp-controller="ScheduleUpdate" asp-action="Update" asp-route-id="">Добавить</a>

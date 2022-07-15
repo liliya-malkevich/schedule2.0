@@ -1,39 +1,7 @@
 ﻿using System.Data.SqlClient;
 namespace schedule.Models
 {
-    //    public class GroupDataAccessLayer
-    //    {
-    //        string connectionString = "Data Source=(local)\\SQLEXPRESS; Database = SCHEDULE;Persist Security Info=false;User ID='sa';Password='sa';MultipleActiveResultSets=True;Trusted_Connection=False;";
-
-    //        public IEnumerable<Schedule> GroupList()
-    //        {
-    //            List<Schedule> lstGroup = new List<Schedule>();
-
-    //            using (SqlConnection con = new SqlConnection(connectionString))
-    //            {
-    //                SqlCommand cmd = new SqlCommand("sch.GroupList", con);
-    //                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-
-    //                con.Open();
-    //                SqlDataReader sdr = cmd.ExecuteReader();
-
-    //                while (sdr.Read())
-    //                {
-    //                    //Group group = new Group();
-    //                    Schedule sch = new Schedule();
-    //                    sch.gr.IdGroup = sdr.GetInt32(0);
-    //                    sch.gr.numGroup = sdr.GetString(1);
-    //                    sch.gr.IdCourse = Convert.ToInt32(sdr["IdCourse"]);
-
-    //                    lstGroup.Add(sch);
-
-    //                }
-    //                con.Close();
-    //            }
-    //            return lstGroup;
-    //        }
-    //    }
-    //}
+    
 
     public class GroupDataAccessLayer
     {

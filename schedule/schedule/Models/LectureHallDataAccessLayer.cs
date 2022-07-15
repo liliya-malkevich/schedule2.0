@@ -33,7 +33,7 @@ namespace schedule.Models
                     {
                     LectureHall lectureHall = new LectureHall();
                     lectureHall.IdLectureHall = Convert.ToInt32(sdr["IdLectureHall"]);
-                    lectureHall.LectureHallName = sdr["LectureHallName"].ToString();
+                    lectureHall.LectureHallName = sdr["LectureHallNum"].ToString();
 
                         lstLectureHall.Add(lectureHall);
 

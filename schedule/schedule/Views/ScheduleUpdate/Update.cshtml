@@ -1,0 +1,112 @@
+﻿@using schedule;
+@model ViewModelUpdate
+
+@{  
+    ViewData["Title"] = "Update";  
+}  
+<h2>Edit</h2>  
+<h4>Schedule</h4>  
+<hr/> 
+
+           
+               
+
+                    
+               @*@Html.TextBoxFor(m=>m.sch.IdSchedule)
+               @Html.TextBoxFor(m=>m.sch.numCourse)
+*@
+
+            <div>
+            <form   asp-controller="ScheduleUpdate" asp-action="Update" method="post">
+                <input type="hidden" asp-for="sch.IdSchedule" />
+                @*<input type="hidden" asp-for="nameLesson" />*@
+                @*<input type="hidden" asp-for="TName" />*@
+
+                
+                
+                <select data-val="true" id="IdGroup" name="IdGroup">
+                 <option selected>Group</option>
+                @foreach(Group item in Model.Group)
+                {
+                    <option value="@item.IdGroup">
+                    @Html.DisplayFor(modelItem => item.numGroup)g+@Html.DisplayFor(i=>item.IdCourse)k
+                    </option>
+                }
+                </select>
+
+                 <select data-val="true" id="IdFormat" name="IdFormat">
+                 <option selected>Format</option>
+                @foreach(Format item in Model.Format)
+                {
+                    <option value="@item.IdFormat">
+                    @Html.DisplayFor(modelItem => item.FormatName)
+                    </option>
+                }
+                </select>
+
+                
+                <select data-val="true" id="IdLectureHall" name="IdLectureHall">
+                 <option selected>LectureHall</option>
+                @foreach(LectureHall item in Model.LectureHall)
+                {
+                    <option value="@item.IdLectureHall">
+                    @Html.DisplayFor(modelItem => item.LectureHallName)
+                    </option>
+                }
+                </select>
+
+                 <select data-val="true" id="IdNote" name="IdNote">
+                 <option selected>Note</option>
+                @foreach(Note item in Model.Note)
+                {
+                    <option value="@item.IdNote">
+                    @Html.DisplayFor(modelItem => item.NoteName)
+                    </option>
+                }
+                </select>
+
+                <select data-val="true" id="IdSubject" name="IdSubject">
+                 <option selected>Subject</option>
+                @foreach(Subject item in Model.Subject)
+                {
+                    <option value="@item.IdSubject">
+                    @Html.DisplayFor(modelItem => item.SubjectName)
+                    </option>
+                }
+                </select>
+
+                <select data-val="true" id="IdTeacher" name="IdTeacher">
+                 <option selected>Teacher</option>
+                @foreach(Teacher item in Model.Teacher)
+                {
+                    <option value="@item.IdTeacher">
+                    @Html.DisplayFor(modelItem => item.TeacherName)
+                    </option>
+                }
+                </select>
+
+                 <select data-val="true" id="IdTimeLesson" name="IdTimeLesson">
+                 <option selected>TimeLesson</option>
+                @foreach(TimeLessons item in Model.TimeLessons)
+                {
+                    <option value="@item.IdTimeLesson">
+                    @Html.DisplayFor(modelItem => item.numTimeLesson)
+                    </option>
+                }
+                </select>
+
+                 <select data-val="true" id="IdWeekday" name="IdWeekday">
+                 <option selected>Weekday</option>
+                @foreach(Weekday item in Model.Weekday)
+                {
+                    <option value="@item.IdWeekday">
+                    @Html.DisplayFor(modelItem => item.WeekdayName)
+                    </option>
+                }
+                </select>
+
+                <input type="submit" value="Сохранить" />
+            </form>
+        </div>
+               
+            

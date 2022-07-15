@@ -33,7 +33,7 @@ namespace schedule.Controllers
             {
                 //mymodel.Group = objgroup.GroupList().ToList();
                 mymodel.Group = objgroup.GroupCourseList(IdCourse).ToList();
-                mymodel.Schedule = objschedule.ScheduleList().ToList();
+                mymodel.Schedule = objschedule.ScheduleCourseRead(IdCourse).ToList();
                 return View(mymodel);
             }
 
