@@ -95,11 +95,13 @@
             </tr>
     </thead>
     <tbody>
+        
         @foreach(Schedule item in Model.Schedule)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.WeekdayName)
+                    @($"{item.WeekdayName}")
+                   @* @Html.DisplayFor(modelItem => item.WeekdayName)*@
                 </td>
                  <td>
                     @Html.DisplayFor(modelItem => item.numTimeLesson)
@@ -132,13 +134,24 @@
                     @Html.DisplayFor(modelItem => item.NoteName)
                 </td>
                 <td>  
-               @* <a asp-action="Edit_customer" asp-route-id="@item">Edit</a> | *@ 
-                <form id="form-@item.IdSchedule"  asp-controller="Schedule" asp-action="DeleteSchedule" method="post">
-                                    <input type="hidden" name="IdSchedule" value="@item.IdSchedule">
-                                    <a href="#" onclick="document.getElementById('form-@item.IdSchedule').submit();">удалить</a>
-                                </form>
-             
+               
+              @*  @Html.ActionLink("ScheduleUpdate","Update","ScheduleUpdate", new { IdSchedule=item.IdSchedule})*@
+             <a asp-controller="ScheduleUpdate" asp-action="Update" id="IdSchedule" name="IdSchedule" asp-route-IdSchedule="@item.IdSchedule" >Редактировать</a> 
+               
+           
             </td>  
+             <td> 
+                @* <a asp-controller="ScheduleUpdate" asp-action="Update" asp-route-id="@item.IdSchedule">edit</a>*@
+               @* <form id="form-@item.IdSchedule"  asp-controller="ScheduleUpdate" asp-action="Update">
+                                    <input type="hidden" name="IdSchedule" value="@item.IdSchedule">
+                                    <a href="#">edit</a>
+                                </form>*@
+
+                                 <form id="form-@item.IdSchedule"  asp-controller="Schedule" asp-action="DeleteSchedule" method="post">
+                                    <input type="hidden" name="IdSchedule" value="@item.IdSchedule">
+                                    <a href="#" onclick="document.getElementById('form-@item.IdSchedule').submit();">Удалить</a>
+                                </form>
+             </td>
             </tr>
         }
     </tbody>

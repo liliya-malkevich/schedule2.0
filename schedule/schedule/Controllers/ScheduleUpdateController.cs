@@ -20,7 +20,7 @@ namespace schedule.Controllers
         {
             //dynamic mymodel = new ExpandoObject();
             ViewModelUpdate mymodel = new ViewModelUpdate();
-            mymodel.sch = IdSchedule == default ? new Schedule() : objschedule.ScheduleLessonRead(IdSchedule);
+            
             mymodel.Group = objgroup.GroupList().ToList();
             mymodel.Format = objformat.FormatList().ToList();
             mymodel.LectureHall = objlecturehall.LectureHallList().ToList();
@@ -29,12 +29,14 @@ namespace schedule.Controllers
             mymodel.Subject = objsubject.SubjectList().ToList();
             mymodel.TimeLessons = objtimelesson.TimeLessonsList().ToList();
             mymodel.Weekday = objweekday.WeekdayList().ToList();
+            mymodel.sch = IdSchedule == default ? new Schedule() : objschedule.ScheduleLessonRead(IdSchedule);
             return View(mymodel);
             //return View(dataManager.Lesson.GetLessons());
         }
         [HttpPost]
-        public IActionResult Update(Schedule model)
+        public IActionResult Update(int id, [Bind] Schedule model)
         {
+            model.IdSchedule = id;
             if (ModelState.IsValid)
             {
                 objschedule.UpdateSchedule(model);
