@@ -28,9 +28,9 @@
                  <option selected>№ группы</option>
                 @foreach(Group item in Model.Group)
                 {
-                if (Model.sch.numGroup != null && item.numGroup.Contains(Model.sch.numGroup))
+                if (Model.sch.numGroup != null && item.numGroup.Contains(Model.sch.numGroup) && item.IdCourse == Model.sch.numCourse)
                 {
-                    <option selected value="@item.IdGroup">@Model.sch.numGroup</option>
+                    <option selected value="@item.IdGroup">@Model.sch.numGroup г+@Model.sch.numCourse k @item.IdCourse</option>
                     continue;
                 }
                 <option value="@item.IdGroup">
