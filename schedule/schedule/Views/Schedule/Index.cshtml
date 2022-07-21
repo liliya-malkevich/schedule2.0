@@ -30,12 +30,12 @@
        
 </select>
     @* <input type="submit"/>*@
- </form>  
+@* </form>  
 
 
 
-    <form asp-controller="Schedule" asp-action="Index" method="post">
-<select data-val="true" id="IdGroup" name="IdGroup" onchange="this.form.submit();">
+    <form asp-controller="Schedule" asp-action="Index" method="post">*@
+<select data-val="true" id="IdGroup" name="IdGroup" @*onchange="this.form.submit();"*@>
     <option selected>Group</option>
     @foreach (Group item in Model.Group)
    {
@@ -48,8 +48,34 @@
                  
    }
 
+   
+
    </select>
-    @* <input type="submit"/>*@
+
+
+   <select data-val="true" id="IdWeekday" name="IdWeekday" @*onchange="this.form.submit();"*@>
+    <option selected>Weeekday</option>
+    @foreach (Weekday item in Model.Weekday)
+   {
+       
+                <option value="@item.IdWeekday">
+                 @Html.DisplayFor(modelItem => item.WeekdayName)
+                </option>
+                 
+                
+                 
+   }
+
+   
+
+   </select>
+
+   @* @foreach(Weekday item in Model.Weekday)
+        {
+            <a asp-controller="Schedule" asp-action="Index" id="IdWeekday" name="IdWeekday" asp-route-IdWeekday="@item.IdWeekday" >@Html.DisplayFor(modelItem => item.WeekdayName)</a>
+        }*@
+
+    <input type="submit"/>
    </form> 
 
 
@@ -95,7 +121,10 @@
             </tr>
     </thead>
     <tbody>
-        
+
+
+       
+
         @foreach(Schedule item in Model.Schedule)
         {
             <tr>

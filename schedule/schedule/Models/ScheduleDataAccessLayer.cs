@@ -151,6 +151,43 @@ namespace schedule.Models
             return schedule;
         }
 
+        public IEnumerable<Schedule> ScheduleWeekdayRead(int IdWeekday)
+        {
+            List<Schedule> lstschedule = new List<Schedule>();
+
+            using (con)
+            {
+                SqlCommand cmd = new SqlCommand("sch.ScheduleWeekdayRead", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@IdWeekday", IdWeekday);
+                con.Open();
+                SqlDataReader sdr = cmd.ExecuteReader();
+                lstschedule = GetSchedule(sdr);
+
+                con.Close();
+            }
+            return lstschedule;
+        }
+
+        public IEnumerable<Schedule> ScheduleByIdWeekdayGroupRead(int IdWeekday,int IdGroup)
+        {
+            List<Schedule> lstschedule = new List<Schedule>();
+
+            using (con)
+            {
+                SqlCommand cmd = new SqlCommand("sch.ScheduleByIdWeekdayGroupRead", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@IdWeekday", IdWeekday);
+                cmd.Parameters.AddWithValue("@IdGroup", IdGroup);
+                con.Open();
+                SqlDataReader sdr = cmd.ExecuteReader();
+                lstschedule = GetSchedule(sdr);
+
+                con.Close();
+            }
+            return lstschedule;
+        }
+
         public List<Schedule> GetSchedule(SqlDataReader sdr)
         {
             List<Schedule> lstschedule = new List<Schedule>();
