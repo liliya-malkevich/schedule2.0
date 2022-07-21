@@ -1,0 +1,189 @@
+﻿@using schedule;
+@model dynamic
+ <script src="~/Scripts/jquery-2.1.1.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+@{  
+    ViewData["Title"] = "Schedule";  
+}  
+<h2>Schedule</h2> 
+
+<div id="dynamicContentContainer"></div>
+
+
+@*@await Html.PartialAsync("GetGroupByCourseId")*@
+
+ <form asp-controller="Schedule" asp-action="Index" method="post">
+<select data-val="true" id="IdCourse" name="IdCourse"  onchange="this.form.submit();">
+    <option selected>Course</option>
+    @foreach (Course item in Model.Course)
+   {
+      
+                <option value="@item.IdCourse">
+                 
+                    @Html.DisplayFor(modelItem => item.numCourse)
+                   
+                </option>
+                 
+      
+                 
+   }
+       
+</select>
+    @* <input type="submit"/>*@
+@* </form>  
+
+
+
+    <form asp-controller="Schedule" asp-action="Index" method="post">*@
+<select data-val="true" id="IdGroup" name="IdGroup" @*onchange="this.form.submit();"*@>
+    <option selected>Group</option>
+    @foreach (Group item in Model.Group)
+   {
+       
+                <option value="@item.IdGroup">
+                 @Html.DisplayFor(modelItem => item.IdCourse)k +  @Html.DisplayFor(modelItem => item.numGroup)g
+                </option>
+                 
+                
+                 
+   }
+
+   
+
+   </select>
+
+
+   <select data-val="true" id="IdWeekday" name="IdWeekday" @*onchange="this.form.submit();"*@>
+    <option selected>Weeekday</option>
+    @foreach (Weekday item in Model.Weekday)
+   {
+       
+                <option value="@item.IdWeekday">
+                 @Html.DisplayFor(modelItem => item.WeekdayName)
+                </option>
+                 
+                
+                 
+   }
+
+   
+
+   </select>
+
+   @* @foreach(Weekday item in Model.Weekday)
+        {
+            <a asp-controller="Schedule" asp-action="Index" id="IdWeekday" name="IdWeekday" asp-route-IdWeekday="@item.IdWeekday" >@Html.DisplayFor(modelItem => item.WeekdayName)</a>
+        }*@
+
+    <input type="submit"/>
+   </form> 
+
+
+
+<table class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>
+               @* @Html.DisplayNameFor(model => model.WeekdayName)*@
+               День недели
+            </th>
+            <th>
+              №
+            </th>
+             <th>
+                Дисциплина
+            </th>
+             <th>
+               Формат
+            </th>
+             <th>
+                Начало
+            </th>
+             <th>
+                Конец
+            </th>
+             <th>
+                Группа
+            </th>
+             <th>
+                Курс
+            </th>
+             <th>
+              Препод
+            </th>
+             <th>
+                Ауд
+            </th>
+             <th>
+                Заметки
+            </th>
+       
+            </tr>
+    </thead>
+    <tbody>
+
+
+       
+
+        @foreach(Schedule item in Model.Schedule)
+        {
+            <tr>
+                <td>
+                    @($"{item.WeekdayName}")
+                   @* @Html.DisplayFor(modelItem => item.WeekdayName)*@
+                </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.numTimeLesson)
+                </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.SubjectName)
+                </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.FormatName)
+                </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.LessonTimeStart)
+                </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.LessonTimeEnd)
+                </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.numGroup)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.numCourse)
+                </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.TeacherName)
+                </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.LectureHallNum)
+                </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.NoteName)
+                </td>
+                <td>  
+               
+              @*  @Html.ActionLink("ScheduleUpdate","Update","ScheduleUpdate", new { IdSchedule=item.IdSchedule})*@
+             <a asp-controller="ScheduleUpdate" asp-action="Update" id="IdSchedule" name="IdSchedule" asp-route-IdSchedule="@item.IdSchedule" >Редактировать</a> 
+               
+           
+            </td>  
+             <td> 
+                @* <a asp-controller="ScheduleUpdate" asp-action="Update" asp-route-id="@item.IdSchedule">edit</a>*@
+               @* <form id="form-@item.IdSchedule"  asp-controller="ScheduleUpdate" asp-action="Update">
+                                    <input type="hidden" name="IdSchedule" value="@item.IdSchedule">
+                                    <a href="#">edit</a>
+                                </form>*@
+
+                                 <form id="form-@item.IdSchedule"  asp-controller="Schedule" asp-action="DeleteSchedule" method="post">
+                                    <input type="hidden" name="IdSchedule" value="@item.IdSchedule">
+                                    <a href="#" onclick="document.getElementById('form-@item.IdSchedule').submit();">Удалить</a>
+                                </form>
+             </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a  asp-controller="ScheduleUpdate" asp-action="Update" asp-route-id="">Добавить</a>
