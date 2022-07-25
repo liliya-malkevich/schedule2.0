@@ -16,6 +16,21 @@
                @Html.TextBoxFor(m=>m.sch.numCourse)
 *@
 
+
+<form   asp-controller="ScheduleUpdate" asp-action="Update" method="get">
+<select data-val="true" id="IdCourse" name="IdCourse" onchange="this.form.submit();">
+                 <option selected>Курс</option>
+                @foreach(Course item in Model.Course)
+                {
+                <option value="@item.IdCourse">
+                 
+                    @Html.DisplayFor(modelItem => item.numCourse)
+                   
+                </option>
+                }
+                </select>
+
+</form>
             <div>
             <form   asp-controller="ScheduleUpdate" asp-action="Update" method="post" enctype="multipart/form-data">
                 <input type="hidden" asp-for="sch.IdSchedule" value="@Model.sch.IdSchedule"/>
@@ -24,6 +39,9 @@
 
                 
                 <div asp-validation-summary="All"></div>
+
+                
+
                 <select data-val="true" id="IdGroup" name="IdGroup">
                  <option selected>№ группы</option>
                 @foreach(Group item in Model.Group)
